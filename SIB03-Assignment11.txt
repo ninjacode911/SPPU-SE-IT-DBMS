@@ -1,0 +1,23 @@
+i) Find the names of all employees whose name starts with „Sa‟. 
+
+SELECT Ename
+
+FROM emp
+
+WHERE Ename LIKE 'Sa%';
+
+ii) List all the employees name and salary whose age is less than 40 years. 
+
+SELECT Ename, Salary
+
+FROM emp
+
+WHERE Age < 40;
+
+iii) Select the employees whose salary is between Rs. 20000 and Rs. 30000.
+
+SELECT *
+
+FROM emp
+
+WHERE Salary BETWEEN 20000 AND 30000;

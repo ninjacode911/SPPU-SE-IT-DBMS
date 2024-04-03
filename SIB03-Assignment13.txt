@@ -1,0 +1,53 @@
+mysql> create database student_grade;
+
+mysql> use student_grade;
+
+mysql> create table stud(Roll_no int primary key,Name varchar(15) not null,sub1 int not null,sub2 int not null,sub3 int not null);
+
+
+mysql> insert into stud values(1,'John',90,95,97); 
+
+mysql> insert into stud values(2,'Mark',80,85,77); 
+
+mysql> insert into stud values(3,'Jonas',65,64,63);
+
+mysql> insert into stud values(4,'Jay',50,55,60); 
+
+mysql> insert into stud values(5,'Frank',35,30,40); 
+
+
+
+mysql> delimiter //
+mysql> create procedure cal_grade()
+ begin
+ declare rn,s1,s2,s3,t int;
+ declare stu_cursor cursor for select Roll_no,sub1,sub2,sub3 from stud;
+ open stu_cursor;
+ cursor_stu:loop
+ fetch stu_cursor into rn,s1,s2,s3;
+ set t=(s1+s2+s3)/3;
+ if t>80 then select concat('O: ',t) as "rows";
+ end if;
+ if t>=75 and t<=80 then select concat('A+: ',t) as "rows";
+ end if;
+ if t>=71 and t<=74 then select concat('A: ',t) as "rows";
+ end if;
+ if t>=65 and t<=70 then select concat('B+: ',t) as "rows";
+ end if;
+ if t>=60 and t<=64 then select concat('B: ',t) as "rows";
+ end if;
+ if t>=55 and t<=59 then select concat('C+: ',t) as "rows";
+ end if;
+ if t>=50 and t<=54 then select concat('C: ',t) as "rows";
+ end if;
+ if t>=35 and t<=40 then select concat('FAIL: ',t) as "rows";
+ end if;
+ end loop cursor_stu;
+ close stu_cursor;
+ end //
+
+mysql> delimiter ;
+
+
+mysql> call cal_grade();
+

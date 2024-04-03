@@ -1,0 +1,53 @@
+1. Display the contents of batch for particular course having coursecode=10 
+
+SELECT *
+
+FROM Batch
+
+WHERE coursecode = 10;
+
+2. Display the batchcode of batch having expectedincome more than netincome by 2000 
+
+SELECT batchcode
+
+FROM Batch
+
+WHERE expectedincome > netincome + 2000;
+
+3. Display the coursename, startingdate of all batches 
+
+SELECT c.coursename, b.startingdate
+
+FROM Course c
+
+JOIN Batch b ON c.coursecode = b.coursecode;
+
+4. Find out coursename with coursefees greater than 50000
+
+ SELECT coursename
+
+FROM Course
+
+WHERE coursefees > 50000;
+
+5. Display the details of batch having a specified coursename. 
+
+SELECT *
+
+FROM Batch
+
+WHERE coursecode IN (SELECT coursecode FROM Course WHERE coursename = 'specified_coursename');
+
+6. Find out the number of persons whose name starts with „S‟.
+
+ SELECT COUNT(*) AS person_count
+
+FROM Enquiry
+
+WHERE fname LIKE 'S%';
+
+7. Delete all rows from enquiry for a specified coursename.
+
+DELETE FROM Enquiry
+
+WHERE coursecode IN (SELECT coursecode FROM Course WHERE coursename = 'specified_coursename');

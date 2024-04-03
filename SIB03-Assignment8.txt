@@ -1,0 +1,195 @@
+create table deposit(
+    -> accountno int primary key, cname varchar(20), amount decimal(10.2), acctdate date, bname varchar(20));
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> insert into deposit values (401,'Atharva','2000.00','2003-03-19','Solapur');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into deposit values (402,'Aniket','3000.00','2003-04-19','Solapur');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into deposit values (403,'Ajinkya','3000.00','2004-04-19','Washim');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into deposit values (404,'Yash','1000.00','2007-04-09','Pune');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into deposit values (405,'Deepak','2000.00','2004-07-09','Pune');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select *from deposit;
++-----------+---------+--------+------------+---------+
+| accountno | cname   | amount | acctdate   | bname   |
++-----------+---------+--------+------------+---------+
+|       401 | Atharva |   2000 | 2003-03-19 | Solapur |
+|       402 | Aniket  |   3000 | 2003-04-19 | Solapur |
+|       403 | Ajinkya |   3000 | 2004-04-19 | Washim  |
+|       404 | Yash    |   1000 | 2007-04-09 | Pune    |
+|       405 | Deepak  |   2000 | 2004-07-09 | Pune    |
++-----------+---------+--------+------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> create table branch
+    -> (bname varchar(20), city varchar(20));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into branch values ('Solapur','Solapur');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into branch values ('Washim','Washim');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into branch values ('Pune','Pune');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select *from branch;
++---------+---------+
+| bname   | city    |
++---------+---------+
+| Solapur | Solapur |
+| Washim  | Washim  |
+| Pune    | Pune    |
++---------+---------+
+3 rows in set (0.00 sec)
+
+mysql> create table customer
+    -> (cname varchar(20), city varchar(20));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into customer values('Atharva','Solapur');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into customer values('Aniket','Solapur');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into customer values('Ajinkya','Washim');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into customer values('Yash','Pune');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into customer values('Deepak','Pune');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select *from customer;
++---------+---------+
+| cname   | city    |
++---------+---------+
+| Atharva | Solapur |
+| Aniket  | Solapur |
+| Ajinkya | Washim  |
+| Yash    | Pune    |
+| Deepak  | Pune    |
++---------+---------+
+5 rows in set (0.00 sec)
+
+mysql> create table borrow
+    -> (loanno int primary key, cname varchar(20), bname varchar(20), amount decimal(10.2));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into table values(601,'Atharva','Solapur','5000.00');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table values(601,'Atharva','Solapur','5000.00')' at line 1
+mysql> insert into borrow values(601,'Atharva','Solapur','5000.00');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into borrow values(602,'Ajinkya','Washim','6000.00');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into borrow values(603,'Aniket','Solapur','8000.00');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into borrow values(604,'Deepak','Pune','2000.00');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select *from borrow;
++--------+---------+---------+--------+
+| loanno | cname   | bname   | amount |
++--------+---------+---------+--------+
+|    601 | Atharva | Solapur |   5000 |
+|    602 | Ajinkya | Washim  |   6000 |
+|    603 | Aniket  | Solapur |   8000 |
+|    604 | Deepak  | Pune    |   2000 |
++--------+---------+---------+--------+
+4 rows in set (0.00 sec)
+
+mysql> insert into deposit values(406,'Ritika','7000.00','2003-05-02','Mumbai');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into deposit values(407,'Ritik','4000.00','2003-06-02','Mumbai');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into deposit values(408,'Hritik','400.00','1990-06-02','Daund');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into branch values('Mumbai','Mumbai');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into branch values('Daund','Daund');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into customer values('Ritika','Mumbai');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into customer values('Ritik','Mumbai');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into customer values('Hritik','Daund');
+Query OK, 1 row affected (0.01 sec)
+
+1. List all data from borrow table. 
+
+SELECT * FROM Borrow;
+
+2. Get customer names who has deposit greater than 1000 and name like “A”.
+
+SELECT cname
+
+FROM Deposit
+
+WHERE amount > 1000 AND cname LIKE 'A%';
+
+3. List the branches having sum of deposit more than 1000 and located in Mumbai. 
+
+SELECT bname
+
+FROM Deposit
+
+JOIN Branch ON Deposit.bname = Branch.bname
+
+WHERE city = 'Mumbai'
+
+GROUP BY bname
+
+HAVING SUM(amount) > 1000;
+
+4. List 10% interest to all depositors living in pune
+
+UPDATE Deposit
+
+SET amount = amount * 1.10
+
+WHERE cname IN (SELECT cname FROM Customer WHERE city = 'Pune');
+
+5. Transfer Rs 500 from account of Ajinkya to the account of Ritik. 
+
+UPDATE Deposit
+
+SET amount = amount - 500
+
+WHERE cname = 'Ajinkya';
+
+
+
+UPDATE Deposit
+
+SET amount = amount + 500
+
+WHERE cname = 'Ritik';
+
+6. Delete depositors having deposit less than 500.
+
+DELETE FROM Deposit
+
+WHERE amount < 500;
+
+

@@ -1,0 +1,59 @@
+1. List the maximum salary in all companies.
+
+ SELECT MAX(salary) AS max_salary
+
+FROM Emp_company;
+
+2. Find maximum salary of employees of “TATA‟ Company. 
+
+SELECT MAX(salary) AS max_salary
+
+FROM Emp_company
+
+WHERE cname = 'TATA';
+
+3. Count the number employees working in”ACC” company. 
+
+SELECT COUNT(*) AS employee_count
+
+FROM Emp_company
+
+WHERE cname = 'ACC';
+
+4. Display the names of companies and the maximum salary in that company. 
+
+SELECT cname, MAX(salary) AS max_salary
+
+FROM Emp_company
+
+GROUP BY cname;
+
+5. Find the average salary of each company. 
+
+SELECT cname, AVG(salary) AS avg_salary
+
+FROM Emp_company
+
+GROUP BY cname;
+
+6. Increase the salary of an employee by 15% who are living in city Mumbai. 
+
+UPDATE Emp_company
+
+SET salary = salary * 1.15
+
+WHERE city = 'Mumbai';
+
+7. Delete rows of the table having salary less than 5000. 
+
+DELETE FROM Emp_company
+
+WHERE salary < 5000;
+
+8. List the names of employees who joined in Jan-2000
+
+SELECT ename
+
+FROM Emp_company
+
+WHERE DATE_FORMAT(joiningdate, '%Y-%m') = '2000-01';

@@ -1,0 +1,76 @@
+CREATE TABLE Customer (
+  Cust_no INT PRIMARY KEY,
+  name VARCHAR(50) NOT NULL,
+  Street VARCHAR(100),
+  city VARCHAR(50),
+  state VARCHAR(50)
+);
+
+CREATE TABLE Order (
+  Order_no INT PRIMARY KEY,
+  Cust_no INT,
+  Order_date DATE,
+  Ship_date DATE,
+  Tocity VARCHAR(50),
+  ToState VARCHAR(50),
+  ToZip VARCHAR(10),
+  FOREIGN KEY (Cust_no) REFERENCES Customer(Cust_no)
+);
+
+CREATE TABLE Stock (
+  Stock_no INT PRIMARY KEY,
+  price DECIMAL(8,2),
+  tax DECIMAL(5,2)
+);
+
+CREATE TABLE Contains (
+  Order_no INT,
+  Stock_no INT,
+  quantity INT,
+  Discount DECIMAL(5,2),
+  PRIMARY KEY (Order_no, Stock_no),
+  FOREIGN KEY (Order_no) REFERENCES Order(Order_no),
+  FOREIGN KEY (Stock_no) REFERENCES Stock(Stock_no)
+);
+
+INSERT INTO Customer VALUES (101, 'John Smith', '123 Main St', 'New York City', 'New York'),
+INSERT INTO Customer VALUES  (102, 'Jane Doe', '456 Elm St', 'Los Angeles', 'California'),
+INSERT INTO Customer VALUES  (103, 'Michael Johnson', '789 Oak St', 'Chicago', 'Illinois'),
+INSERT INTO Customer VALUES  (104, 'Emily Williams', '321 Pine St', 'Houston', 'Texas'),
+INSERT INTO Customer VALUES  (105, 'David Brown', '987 Maple St', 'Miami', 'Florida');
+
+INSERT INTO Order VALUES(1001, 101, '2023-06-01', '2023-06-03', 'New York City', 'New York', '10001'),
+INSERT INTO Order VALUES  (1002, 102, '2023-06-02', '2023-06-04', 'Los Angeles', 'California', '90001'),
+INSERT INTO Order VALUES  (1003, 103, '2023-06-03', '2023-06-05', 'Chicago', 'Illinois', '60001'),
+INSERT INTO Order VALUES  (1004, 104, '2023-06-04', '2023-06-06', 'Houston', 'Texas', '77001'),
+INSERT INTO Order VALUES  (1005, 105, '2023-06-05', '2023-06-07', 'Miami', 'Florida', '33101');
+
+INSERT INTO Contains VALUES (1001, 101, 2, 0.1),
+INSERT INTO Contains VALUES  (1002, 102, 3, 0.15),
+INSERT INTO Contains VALUES  (1003, 103, 1, 0.05),
+INSERT INTO Contains VALUES  (1004, 104, 4, 0.2),
+INSERT INTO Contains VALUES  (1005, 105, 2, 0.1);
+
+INSERT INTO Stock VALUES (101, 10.99, 0.05),
+INSERT INTO Stock VALUES  (102, 24.99, 0.1),
+INSERT INTO Stock VALUES  (103, 14.99, 0.05),
+INSERT INTO Stock VALUES  (104, 9.99, 0.05),
+INSERT INTO Stock VALUES (105, 19.99, 0.1);
+
+
+
+
+CREATE VIEW OrderView AS 
+SELECT Order_no, Cust_no
+FROM Order;
+
+SELECT c.name, c.city, o.Order_no, o.Order_date
+FROM Customer c
+JOIN Order o ON c.Cust_no = o.Cust_no
+WHERE c.Cust_no = 101;
+
+SELECT c.name, c.city, o.Order_no, o.Order_date
+FROM Customer c
+JOIN Order o ON c.Cust_no = o.Cust_no
+WHERE c.Cust_no = 101;
+

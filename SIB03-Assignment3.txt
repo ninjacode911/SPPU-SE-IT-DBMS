@@ -1,0 +1,89 @@
+
+CREATE TABLE BOOK (
+    -> Book_ISBN INT PRIMARY KEY,
+    -> Title VARCHAR(100) NOT NULL,
+    -> Publisher_Name VARCHAR(100),
+    -> Price DECIMAL(8, 2) CHECK (Price > 0),
+    -> Date_Of_Publication DATE DEFAULT '2023-06-07',
+    ->  Book_Copy INT
+    -> );
+
+mysql> insert into BOOK values(1,'book1','publisher1','100.00',5);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into BOOK values(1,'book1','publisher1','100.00','2023-06-02',5);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into BOOK values(2,'book2','publisher2','200.00','2023-06-02',6);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into BOOK values(3,'book3','Tata MacGraw Hill','300.00','2023-06-02',12);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into BOOK values(4,'book4','publisher3','400.00','2023-06-02',13);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into BOOK values(5,'book5','publisher4','500.00','2023-06-02',14);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> create table BOOK_AUTHORS(
+    -> Book_ISBN int,
+    -> Author_Name varchar(20),
+    -> Author_City varchar(20) default 'Pune',
+    -> Phone varchar(20),
+    -> unique (Phone),
+    -> primary key(Book_ISBN,Author_Name),
+    -> foreign key(Book_ISBN) references BOOK(Book_ISBN)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> insert into BOOK_AUTHORS VALUES(1,'author1','Pune','1234567890');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into BOOK_AUTHORS VALUES(2,'author2','Pune','2234567890');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into BOOK_AUTHORS VALUES(3,'author3','Pune','2274567890');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into BOOK_AUTHORS VALUES(4,'author4','Pune','2274567856');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into BOOK_AUTHORS VALUES(5,'author5','Pune','2274588856');
+Query OK, 1 row affected (0.01 sec)
+
+
+
+mysql> select Title
+    -> from BOOK
+    -> where Book_Copy between 10 and 15;
+
+
+mysql> update BOOK
+    -> set Book_Copy=10
+    -> where Publisher_Name='Tata MacGraw Hill';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+
+mysql> select Publisher_Name
+    -> from BOOK
+    -> group by Publisher_Name
+    -> having count(*)=(
+    -> select max(Book_Count)
+    -> from(
+    -> select Publisher_Name, count(*) as Book_Count
+    -> from BOOK
+    -> group by Publisher_Name
+    -> ) as counts
+    -> );
+
+
+mysql> select Publisher_Name, count(*) as Book_Count
+    -> from BOOK
+    -> group by Publisher_Name
+    -> order by Book_Count asc;
+
+mysql> select b.*
+    -> from BOOK b
+    -> INNER JOIN BOOK_AUTHORS ba ON b.Book_ISBN = ba.Book_ISBN
+    -> where ba.Author_City = 'Pune';

@@ -1,0 +1,45 @@
+CREATE TABLE Stud_Marks (
+  id INT,
+  name VARCHAR(255),
+  total_marks INT
+);
+
+INSERT INTO Stud_Marks VALUES (1,'John', 1400);
+INSERT INTO Stud_Marks VALUES (2,'Emma', 950);
+INSERT INTO Stud_Marks VALUES (3,'Michael', 850);
+INSERT INTO Stud_Marks VALUES (4,'Sophia', 1100);
+INSERT INTO Stud_Marks VALUES (5,'William', 900);
+
+CREATE TABLE Results (
+  Roll INT,
+  Name VARCHAR(255),
+  Marks INT,
+  Class VARCHAR(255)
+);
+
+delimiter #
+
+create procedure send1()
+     beginde
+     declare rolu,m int;
+     declare nam,fc,sc,dc varchar(20);
+     declare gori cursor for select id , name , total_marks from Stud_Marks;
+     open gori
+     ;
+     sloop : loop
+     set dc="Distinction";
+     set fc="First C";
+     set sc="Second C";
+     fetch gori into rolu,nam,m;
+     if m>990 and m<=1500 then insert into Results Values(rolu,nam,m,dc);
+     end if;
+     if m<989 and m>900  then insert into Results Values(rolu,nam,m,fc);
+     end if;
+     if m<899 and m>825 then insert into Results Values(rolu,nam,m,sc);
+     end if;
+     end loop sloop;
+     close gori;
+     end#
+delimiter ;
+
+call send1();

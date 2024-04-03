@@ -1,0 +1,19 @@
+2. Add field Author_email to BOOK_AUTHORS table. 
+
+ALTER TABLE BOOK_AUTHORS
+
+ADD COLUMN Author_email VARCHAR(100);
+
+3.Create a view on Book table as “DBMS BOOKS” by selecting all books titled DBMS. 
+
+CREATE VIEW `DBMS BOOKS` AS
+
+SELECT *
+
+FROM BOOK
+
+WHERE Title = 'DBMS';
+
+4.Drop the view “DBMS BOOKS” just created 
+
+DROP VIEW IF EXISTS `DBMS BOOKS`;

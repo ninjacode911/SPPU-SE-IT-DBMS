@@ -1,0 +1,118 @@
+mysql> create table emp(
+     eno int primary key,
+     ename varchar(20),
+     bdate date,
+     title varchar(20),
+     salary decimal(10.2),
+     dno int
+     );
+
+
+mysql> insert into emp values(1,'Isha','2003-1-09','EE','45000.00',2);
+
+mysql> insert into emp values(2,'Pisha','2003-2-09','SA','25000.00',3);
+
+mysql> insert into emp values(3,'Tisha','2003-3-09','EE','55000.00',4);
+
+mysql> insert into emp values(4,'Disha','2003-4-09','TT','65000.00',5);
+
+
+mysql> create table proj(
+    -> pno int primary key,
+    -> pname varchar(20),
+    -> budget decimal(10.2),
+    -> dno int
+    -> );
+
+mysql> insert into proj values(1,'WEB1','200000',2);
+
+mysql> insert into proj values(2,'WEB2','150000',3);
+
+mysql> insert into proj values(3,'WEB3','90000',4);
+
+
+mysql> create table dept(
+    -> dno int primary key,
+    -> dname varchar(20),
+    -> mgreno int
+    -> );
+
+mysql> insert into dept values(2,'D1',1);
+
+mysql> insert into dept values(3,'D2',2);
+
+mysql> insert into dept values(4,'D3',3);
+
+
+mysql> create table workson(
+    -> eno int,
+    -> pno int,
+    -> hours int
+    -> );
+
+mysql> insert into workson values(1,1,9);
+
+mysql> insert into workson values(2,1,8);
+
+mysql> insert into workson values(2,2,7);
+
+mysql> insert into workson values(3,2,7);
+
+
+mysql> drop table workson;
+
+
+
+mysql> create table workson(
+    -> eno int,
+    -> pno int,
+    -> hours int,
+    -> primary key(eno,pno),
+    -> foreign key(eno) references emp(eno),
+    -> foreign key(pno) references proj(pno)
+    -> );
+
+mysql>  insert into workson values(1,1,9);
+
+mysql>  insert into workson values(2,1,8);
+
+mysql>  insert into workson values(2,2,7);
+
+mysql> delete from workson where hours=7;
+
+mysql> delete from workson where hours=9;
+
+mysql>  insert into workson values(1,2,7);
+
+mysql>  insert into workson values(4,3,9);
+
+
+
+mysql> select proj.pno,proj.pname,proj.budget
+    -> from proj
+    -> where proj.budget>100000.00;
+
+
+mysql> select emp.eno,emp.ename,emp.title,emp.salary
+    -> from emp
+    -> where emp.title in('EE','SA') and emp.salary>35000.00;
+
+
+mysql> select emp.ename
+    -> from emp
+    -> where dno=2
+    -> order by emp.salary desc;
+
+
+mysql> select *
+    -> from dept
+    -> order by dname desc;
+
+
+mysql> select *
+    -> from dept
+    -> order by dname asc;
+
+mysql> select emp.ename,dept.dname,emp.title
+    -> from dept
+    -> join emp on dept.dno=emp.dno;

@@ -1,0 +1,36 @@
+CREATE TABLE Library (
+  Book_ISBN INT PRIMARY KEY,
+  Title VARCHAR(255),
+  Publisher_Name VARCHAR(255),
+  Price DECIMAL(10, 2),
+  Date_Of_Publication DATE,
+  Book_Copy INT
+);
+
+CREATE TABLE Library_Audit (
+  Book_ISBN INT,
+  Old_Title VARCHAR(255),
+  Old_Publisher_Name VARCHAR(255),
+  Old_Price DECIMAL(10, 2),
+  Old_Date_Of_Publication DATE,
+  Old_Book_Copy INT
+);
+
+DELIMITER //
+
+CREATE TRIGGER backup_trigger
+AFTER DELETE ON Library
+FOR EACH ROW
+BEGIN
+  INSERT INTO Library_Audit VALUES (OLD.Book_ISBN, OLD.Title, OLD.Publisher_Name, OLD.Price, OLD.Date_Of_Publication, OLD.Book_Copy);
+END//
+
+DELIMITER ;
+
+INSERT INTO Library (Book_ISBN, Title, Publisher_Name, Price, Date_Of_Publication, Book_Copy)
+VALUES
+  (1, 'Book 1', 'Publisher 1', 10.99, '2021-01-01', 5),
+  (2, 'Book 2', 'Publisher 2', 15.99, '2021-02-01', 3),
+  (3, 'Book 3', 'Publisher 3', 12.99, '2021-03-01', 7),
+  (4, 'Book 4', 'Publisher 4', 8.99, '2021-04-01', 2),
+  (5, 'Book 5', 'Publisher 5', 11.99, '2021-05-01', 4);

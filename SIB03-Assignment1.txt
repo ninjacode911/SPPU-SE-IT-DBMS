@@ -1,0 +1,106 @@
+mysql> create table emp(
+     eno int primary key,
+     ename varchar(20),
+     bdate date,
+     title varchar(20),
+     salary decimal(10.2),
+     dno int
+     );
+
+mysql> insert into emp values(1,'Aditya','2003-05-02','Manager','60000.00',2);
+
+
+mysql> insert into emp values(2,'Isha','2003-11-09','ITB','70000.00',3);
+
+mysql> insert into emp values(3,'Vetal','2003-09-09','ITA','50000.00',4);
+
+mysql> insert into emp values(4,'Ganesh','2003-05-09','ITC','40000.00',5);
+
+mysql> create table proj(
+     pno int primary key,
+     pname varchar(20),
+     budget decimal(10.2),
+     dno int
+     );
+
+mysql> insert into proj values(1,'PBL','60000.00',2);
+
+mysql> insert into proj values(2,'PBL2','40000.00',3);
+
+mysql> insert into proj values(3,'PBL3','70000.00',4);
+
+mysql> insert into proj values(4,'PBL4','30000.00',5);
+
+mysql> create table dept(
+     dno int primary key,
+     dname varchar(20),
+     mgreno int
+     );
+
+mysql> insert into dept values(1,'IT',6);
+
+mysql> insert into dept values(2,'CS',9);
+
+mysql> insert into dept values(3,'ENTC',5);
+
+mysql> insert into dept values(4,'AI',7);
+
+
+mysql> create table workson(
+    -> eno int,
+    -> pno int,
+    -> hours int,
+    -> primary key(eno,pno),
+    -> foreign key(eno) references emp(eno),
+    -> foreign key(pno) references proj(pno)
+    -> );
+
+mysql> insert into workson values(1,1,9);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into workson values(2,3,12);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into workson values(3,4,8);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into workson values(4,2,15);
+Query OK, 1 row affected (0.01 sec)
+
+
+mysql> select proj.pname,workson.hours,proj.pno
+    -> from proj
+    -> join workson on proj.pno=workson.pno
+    -> where workson.hours>10;
+
+
+mysql> select proj.pname,dept.dname,proj.budget
+    -> from proj
+    -> join dept on proj.dno=dept.dno
+    -> where proj.budget<50000.00;
+
+
+mysql> select emp.eno,emp.salary
+    -> from emp
+    -> join dept on emp.dno=dept.dno
+    -> where dept.dname='ENTC'
+    -> order by emp.salary desc;
+
+mysql> select emp.eno,emp.salary
+    -> from emp
+    -> join dept on emp.dno=dept.dno
+    -> where dept.dname='IT'
+    -> order by emp.salary desc;
+Empty set (0.00 sec)
+
+mysql> select emp.eno,emp.salary
+    -> from emp
+    -> join dept on emp.dno=dept.dno
+    -> where dept.dname='CS'
+    -> order by emp.salary desc;
+
+
+mysql> select emp.ename,proj.pname,emp.title,workson.hours
+    -> from emp
+    -> join workson on emp.eno=workson.eno
+    -> join proj on emp.dno=proj.dno;

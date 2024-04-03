@@ -1,0 +1,58 @@
+mysql> create table pet(
+    -> petname varchar(20),owner varchar(20),sex varchar(20),bdate date,ddate date);
+
+mysql> insert into pet values('pet1','owner1','male','2022-10-11','2023-05-06');
+
+
+mysql> insert into pet values('pet2','owner1','female','2022-10-11','2023-04-06');
+
+
+mysql> insert into pet values('pet3','owner2','male','2022-10-11','2023-04-07');
+
+mysql> insert into pet values('pet4','owner1','male','2020-10-11','2021-04-07');
+
+mysql> insert into pet values('pet5','owner3','female','2020-10-11','2021-10-11');
+
+2) Display all the pets information. 
+
+SELECT *
+
+FROM Pet;
+
+3)Display all pets in ascending and descending order according to birth date. 
+
+-- Ascending order
+
+SELECT *
+
+FROM Pet
+
+ORDER BY birth_date ASC;
+
+
+
+-- Descending order
+
+SELECT *
+
+FROM Pet
+
+ORDER BY birth_date DESC;
+
+4) Display the pet information of specific owner. 
+
+SELECT *
+
+FROM Pet
+
+WHERE owner = 'specific_owner';
+
+5) count the pet which have same birth_date
+
+SELECT birth_date, COUNT(*) AS pet_count
+
+FROM Pet
+
+GROUP BY birth_date
+
+HAVING COUNT(*) > 1;
